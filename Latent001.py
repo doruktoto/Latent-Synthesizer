@@ -8,7 +8,7 @@ from scipy.io import wavfile
 import sounddevice as sd
 import argparse
 from synth_engine import synth_audio_from_params
-
+from Synth_data import generate_synth_data
 
 # Define the VAE model
 class SynthesizerVAE(keras.Model):
@@ -82,17 +82,6 @@ class SynthesizerVAE(keras.Model):
         reconstruction = self.decoder(z)
         return reconstruction
 
-
-def generate_synth_data(n_samples=1000):
-    params = np.zeros((n_samples, 128))
-    for i in range(n_samples):
-        params[i, 0:10] = np.random.uniform(0, 1, 10)
-        params[i, 10:20] = np.random.uniform(0, 1, 10)
-        params[i, 20:30] = np.random.uniform(0, 1, 10)
-        params[i, 30:40] = np.random.uniform(0, 1, 10)
-        params[i, 40:50] = np.random.uniform(0, 1, 10)
-        params[i, 50:128] = np.random.uniform(0, 1, 78)
-    return params
 
 def create_synth_latent_space(latent_dim=2, n_samples=1000):
     print("Generating synthetic training data...")
